@@ -16,11 +16,14 @@ input.addEventListener(
 );
 
 function getInputValue() {
-    const inputValue = input.value.trim();
+    countryList.innerHTML = '';
+
+    let inputValue = input.value.trim();
     // console.log(inputValue);
     fetchCountries(inputValue)
         .then(renderCountriesCard)
-        .catch(error => console.log(error));
+        .catch(error => Notiflix.Notify.failure('Oops, there is no country with that name'));
+    
 }
 
 function fetchCountries(name) {
@@ -36,21 +39,23 @@ function fetchCountries(name) {
 
 function renderCountriesCard(country) {
 
-    if (country.length > 9) {
+    if (country.length > 10) {
         Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
+    }
+    else if (country.length >= 2 && country.length <= 10) {
+        console.log("more countries");
+
+        countryList.innerHTML = country.map(el => 
+            `<li class="list"><img src =${el.flags.svg} alt=${el.name.official} width="100px" height="50px"><h2>${el.name.official}</h2></li>`
+        ).join('');
+        input.value = '';
     } else {
-        country.map(el => {
-            const {
-                capital,
-                flags: { svg },
-                name: { official },
-                population,
-                languages,
-            } = el
-            const countryName = el.name.official;
-            const markup = `<li class="list"><img src ="${el.flags.svg}" alt="${countryName}" width="100px" height="50px"><h2>${countryName}</h2></li>`
-            countryList.insertAdjacentHTML('afterbegin', markup)
-        });
+        console.log("1 country");
+
+        countryInfo.innerHTML = country.map(el => 
+            `<li class="list"><img src =${el.flags.svg} alt=${el.name.official} width="100px" height="50px"><h2>${el.name.official}</h2><p><span class="bold-text">Capital: </span>${el.capital}</p><p><span class="bold-text">Population: </span>${el.population}</p><p><span class="bold-text">Languages: </span>${Object.values(el.languages)}</p></li>`
+        ).join('');
+        input.value = '';
     }
       console.log(country);
 }
