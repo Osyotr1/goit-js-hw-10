@@ -22,3 +22,20 @@ body {
 li {
   list-style: none;
 }
+
+.country-list {
+  display: block;
+}
+
+.country-lists {
+  display: flex;
+  align-items: center;
+}
+
+.country-name {
+  margin-left: 10px;
+}
+
+.bold-text {
+  font: bold 20px serif;
+}
