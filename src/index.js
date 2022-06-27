@@ -37,17 +37,16 @@ function renderCountriesCard(country) {
     else if (country.length >= 2 && country.length <= 10) {
         countryInfo.innerHTML = '';
         countryList.innerHTML = makeList(country)
-        input.value = '';
     } else {
         countryList.innerHTML = '';
         countryInfo.innerHTML = makeCard(country)
-        input.value = '';
     }
 };
 
 function wrongCountryName() {
-    input.value = ''
-    Notiflix.Notify.failure('Oops, there is no country with that name');
+    if (input.value.length > 0) {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+    }
 };
 
 
